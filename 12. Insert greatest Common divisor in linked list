@@ -1,0 +1,37 @@
+Date : 11/02/2026
+class Solution {
+
+    public int gcd(int first, int second)
+    {
+        if(first==0)
+        {
+            return second;
+        }
+        else
+        {
+            return gcd(second%first,first);
+        }
+    }
+    public ListNode insertGreatestCommonDivisors(ListNode head) {
+        if (head == null || head.next==null)
+        {
+            return head;
+        }
+        ListNode temp=head;
+
+        while(temp!=null && temp.next!=null)
+        {
+            int first= temp.val;
+            int second= temp.next.val;
+
+            int res=gcd(first,second);
+
+            ListNode newNode=new ListNode(res);
+
+            newNode.next=temp.next;
+            temp.next=newNode;
+            temp=temp.next.next;
+        }
+        return head;
+    }
+}
