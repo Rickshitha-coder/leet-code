@@ -1,0 +1,7 @@
+Date : 16/02/2026
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val=node.next.val;
+        node.next=node.next.next;
+    }
+}
