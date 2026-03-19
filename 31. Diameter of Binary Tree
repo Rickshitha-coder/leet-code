@@ -1,0 +1,38 @@
+Date : 19/03/2026
+
+
+class Solution {
+    
+    // ✅ Declare global variable
+    int diameter = 0;
+
+    public int diameterOfBinaryTree(TreeNode root) {
+
+        // Start recursion
+        height(root);
+
+        // Return final diameter
+        return diameter;
+    }
+
+    public int height(TreeNode node)
+    {
+        // Base case: if node is null
+        if(node == null)
+        {
+            return 0;
+        }
+
+        // Get height of left subtree
+        int left = height(node.left);
+
+        // Get height of right subtree
+        int right = height(node.right);
+
+        // Update diameter at this node
+        diameter = Math.max(diameter, left + right);
+
+        // Return height of current node
+        return 1 + Math.max(left, right);
+    }
+}
