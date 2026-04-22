@@ -1,0 +1,42 @@
+Date : 22/04/2026
+
+class Solution {
+
+    public TreeNode sortedListToBST(ListNode head) {
+        if (head == null) return null;
+
+        // find middle
+        ListNode mid = findMid(head);
+
+        TreeNode root = new TreeNode(mid.val);
+
+        // base case
+        if (head == mid) return root;
+
+        // left half
+        root.left = sortedListToBST(head);
+
+        // right half
+        root.right = sortedListToBST(mid.next);
+
+        return root;
+    }
+
+    // find middle using slow-fast pointer
+    public ListNode findMid(ListNode head) {
+        ListNode prev = null;
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+            prev = slow;
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // cut left half
+        if (prev != null) prev.next = null;
+
+        return slow;
+    }
+}
