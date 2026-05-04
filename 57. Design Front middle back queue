@@ -1,0 +1,71 @@
+import java.util.*;
+
+class FrontMiddleBackQueue {
+
+    Deque<Integer> left;
+    Deque<Integer> right;
+
+    public FrontMiddleBackQueue() {
+        left = new ArrayDeque<>();
+        right = new ArrayDeque<>();
+    }
+
+    private void balance() {
+        // keep sizes valid
+        if (left.size() > right.size() + 1) {
+            right.offerFirst(left.pollLast());
+        } else if (left.size() < right.size()) {
+            left.offerLast(right.pollFirst());
+        }
+    }
+
+    public void pushFront(int val) {
+        left.offerFirst(val);
+        balance();
+    }
+
+    public void pushMiddle(int val) {
+        if (left.size() > right.size()) {
+            right.offerFirst(left.pollLast());
+        }
+        left.offerLast(val);
+    }
+
+    public void pushBack(int val) {
+        right.offerLast(val);
+        balance();
+    }
+
+    public int popFront() {
+        if (isEmpty()) return -1;
+
+        int val = left.pollFirst();
+        balance();
+        return val;
+    }
+
+    public int popMiddle() {
+        if (isEmpty()) return -1;
+
+        int val = left.pollLast();
+        balance();
+        return val;
+    }
+
+    public int popBack() {
+        if (isEmpty()) return -1;
+
+        int val;
+        if (!right.isEmpty()) {
+            val = right.pollLast();
+        } else {
+            val = left.pollLast();
+        }
+        balance();
+        return val;
+    }
+
+    private boolean isEmpty() {
+        return left.isEmpty() && right.isEmpty();
+    }
+}
